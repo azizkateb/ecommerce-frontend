@@ -1,0 +1,27 @@
+<div class="auth-wrapper min-h-screen flex items-center justify-center p-6">
+  <div class="card auth-card p-12 w-full max-w-md">
+    <h1 class="text-3xl font-bold uppercase text-center mb-2">Login</h1>
+    <p class="muted text-center mb-10">Welcome back to high-fidelity sound.</p>
+    
+    <form (ngSubmit)="onLogin()" class="space-y-6">
+      <div class="flex flex-col gap-2">
+        <label class="text-xs font-bold uppercase">Email Address</label>
+        <input type="email" name="email" placeholder="alex@example.com" class="input-field" [(ngModel)]="data.email" required>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-bold uppercase">Password</label>
+          <a href="#" class="text-xs muted">Forgot Password?</a>
+        </div>
+        <input type="password" name="password" placeholder="••••••••" class="input-field" [(ngModel)]="data.password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-full py-4 uppercase font-bold tracking-widest">
+        Login
+      </button>
+    </form>
+
+    <p class="text-center mt-8 muted">
+      Don't have an account? <a routerLink="/" class="accent font-bold hover:underline">Register</a>
+    </p>
+  </div>
+</div>

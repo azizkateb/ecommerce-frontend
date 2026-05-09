@@ -1,0 +1,397 @@
+.hero-section {
+  /* centered hero at 85% of viewport width for a modern inset look */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85vw;
+  /* use a responsive height so images can cover nicely */
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  /* keep a subtle gradient overlay but remove hard-coded background image
+     — the actual slide image is now an <img> element for better object-fit control */
+  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+  color: #fff;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 30px 60px rgba(2,6,23,0.08);
+}
+
+/* full-bleed image used for the hero background — keeps aspect and covers */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  -o-object-fit: cover;
+  -o-object-position: center;
+  /* fade in/out via opacity; transform handled by the zoom animation */
+  transition: opacity .7s ease;
+  opacity: 0;
+  transform: scale(1);
+  z-index: 0;
+  pointer-events: none; /* ensure controls and hover reach the header */
+  will-change: transform, opacity;
+}
+
+/* Hero zoom via transform+transition (duration bound from component). */
+.hero-bg-img.active {
+  opacity: 1;
+  /* transform is controlled inline from the template so it restarts reliably */
+}
+
+.hero-bg-img:not(.active) {
+  transform: scale(1);
+}
+
+/* keep the dark overlay above the image but behind content */
+.hero-section > .bg-black\/60,
+.hero-section .hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* stronger left-to-right gradient so text on the left remains readable */
+  background: linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 28%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.0) 100%);
+  pointer-events: none;
+}
+
+/* Arrows */
+.hero-arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+  backdrop-filter: blur(4px);
+}
+.hero-arrow-btn:hover { transform: translateY(-2px); background: rgba(0,0,0,0.55); }
+
+.hero-content {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .55s ease, transform .55s ease;
+  z-index: 10;
+}
+.hero-content.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-content h1 { color: #fff; text-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+.hero-content p { color: rgba(255,255,255,0.9); }
+.hero-content span { color: rgba(255,255,255,0.85); letter-spacing: 10px; }
+
+/* Dots */
+.hero-dots .hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  transition: transform .2s ease, background-color .2s ease, opacity .25s ease;
+  opacity: 0.9;
+  background: rgba(255,255,255,0.55);
+  box-shadow: 0 6px 14px rgba(2,6,23,0.12);
+}
+.hero-dots .hero-dot:hover { transform: scale(1.12); opacity: 1; }
+
+/* center the dots below the hero regardless of utility classes */
+.hero-section .hero-dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -28px;
+  z-index: 22;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.hero-dots .hero-dot.active { transform: scale(1.28); box-shadow: 0 8px 22px rgba(216,125,74,0.22); background: #D87D4A; }
+
+@media (max-width: 640px) {
+  .hero-section .hero-dots { bottom: 12px; }
+}
+
+/* inner content constrained to site max-width */
+.hero-section > div {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1rem; /* keep some horizontal gutter */
+}
+
+@media (max-width: 900px) {
+  .hero-section { width: calc(100vw - 2rem); left: 50%; transform: translateX(-50%); border-radius: 10px; }
+}
+
+.section-intro {
+  text-align: center;
+}
+
+.section-intro h2 {
+  color: var(--text);
+  line-height: 1.05;
+}
+
+.section-intro p {
+  color: var(--muted);
+}
+
+.reveal-card,
+.reveal-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+  will-change: opacity, transform;
+}
+
+.reveal-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-card:nth-child(1) {
+  transition-delay: 0.3s;
+}
+
+.reveal-card:nth-child(2) {
+  transition-delay: 0.6s;
+}
+
+.reveal-card:nth-child(3) {
+  transition-delay: 0.9s;
+}
+
+.category-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  padding-top: 5.5rem;
+  padding-bottom: 2rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: var(--surface);
+  box-shadow: 0 28px 55px rgba(15, 23, 42, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #fbaf85 0%, #d87d4a 50%, #fbbf91 100%);
+}
+
+.category-image-wrapper {
+  position: absolute;
+  top: -3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9rem;
+  height: 9rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: 0 30px 55px rgba(15, 23, 42, 0.14);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.category-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-copy {
+  margin-top: 5.5rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.category-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.category-button {
+  border: none;
+  background: var(--text);
+  color: var(--surface);
+  padding: 0.95rem 1.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-button:hover {
+  transform: translateY(-1px);
+  background: #d87d4a;
+}
+
+.category-card:hover {
+  transform: translateY(-12px);
+  border-color: rgba(216, 125, 74, 0.35);
+  box-shadow: 0 40px 70px rgba(15, 23, 42, 0.18);
+}
+
+.category-card:hover .category-image-wrapper {
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.category-card .arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.category-button:hover .arrow {
+  transform: translateX(4px);
+}
+
+.zx9-speaker {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.zx9-speaker img {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 40px 60px rgba(0,0,0,0.2);
+  transition: transform .4s ease;
+  z-index: 10;
+}
+.zx9-speaker:hover img {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.zx9-speaker::before {
+  content: '';
+  position: absolute;
+  left: -12%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 680px;
+  height: 680px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 420px;
+    background-position: 40% center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .category-card img {
+    width: 120px;
+    height: 120px;
+    top: -2.75rem;
+  }
+  .category-card h3 {
+    margin-top: 3.5rem;
+    font-size: 1rem;
+  }
+  .zx9-speaker img {
+    max-width: 240px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .category-card { padding-top: 8rem; min-height: 380px; }
+  .category-card img { width: 240px; height: 240px; top: -5rem; }
+  .category-card h3 { font-size: 1.25rem; }
+}
+
+/* Ensure categories section centers its grid container */
+.categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Target the inner grid specifically (more specific than single utility classes) */
+.categories > div.grid {
+  width: min(95vw, 1600px);
+  max-width: 1600px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(380px, 1fr));
+  gap: 3rem;
+  justify-items: center;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+  .categories > div.grid {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    width: calc(100vw - 2rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .categories > div.grid {
+    grid-template-columns: 1fr;
+    width: calc(100vw - 2rem);
+  }
+  .category-card { padding-top: 5.25rem; min-height: auto; }
+  .category-card img { width: 140px; height: 140px; top: -3rem; }
+  .category-card h3 { margin-top: 3.5rem; }
+}
+
+/* make cards occupy most of their column width */
+.category-card{ width:100%; max-width:520px; }
+
+@media (min-width: 1100px) {
+  .category-card img { width: 300px; height: 300px; top: -5.5rem; }
+}
+.hero-bg-img.active {
+  opacity: 1;
+  animation: heroZoom 4s ease-in-out forwards;
+}

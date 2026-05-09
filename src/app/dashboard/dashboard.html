@@ -1,0 +1,112 @@
+<app-top-nav></app-top-nav>
+<div class="admin-layout flex min-h-screen bg-zinc-50">
+  <!-- Side Navigation (Reused) -->
+  <aside class="w-64 bg-black text-white fixed h-full flex flex-col">
+    <div class="p-8">
+      <span class="text-xl font-bold tracking-widest uppercase">AzizStore</span>
+      <p class="text-[10px] text-zinc-500 mt-1 uppercase tracking-widest">Dashboard Manager</p>
+    </div>
+    <nav class="flex-grow mt-4">
+      <a routerLink="/admin/dashboard" class="flex items-center gap-4 px-8 py-4 bg-[#D87D4A] text-white">
+        <i class="icon-dashboard"></i> ORDERS
+      </a>
+      <a routerLink="/admin/add-product" class="flex items-center gap-4 px-8 py-4 text-zinc-400 hover:bg-zinc-900 hover:text-white transition-colors">
+        <i class="icon-add"></i> ADD PRODUCT
+      </a>
+      <!-- Other admin links -->
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow ml-64 p-12">
+    <header class="mb-12 flex justify-between items-end">
+      <div>
+        <h1 class="text-4xl font-bold uppercase tracking-tight">Orders Management</h1>
+        <p class="text-zinc-500 mt-2">Manage incoming orders and update delivery status.</p>
+      </div>
+      <div class="flex gap-4">
+        <div class="bg-white border border-zinc-200 px-4 py-2 rounded flex items-center gap-2">
+          <span class="text-xs font-bold text-zinc-400">TOTAL ORDERS:</span>
+          <span class="text-xs font-bold">{{ orders?.length ?? 0 }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Orders Table -->
+    <div class="bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden">
+      <table class="w-full text-left" *ngIf="orders !== null">
+        <thead class="bg-zinc-50 border-b border-zinc-200">
+          <tr>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Order ID</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Customer</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Shipping Info</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Items</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Price</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Status</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-100">
+          <tr *ngFor="let order of orders" class="hover:bg-zinc-50 transition-colors">
+            <td class="px-6 py-8 font-bold text-sm">#{{ order.id }}</td>
+            <td class="px-6 py-8">
+              <div class="text-sm font-bold">{{ order.customerName }}</div>
+              <div class="text-xs text-zinc-500">{{ order.email }}</div>
+            </td>
+            <td class="px-6 py-8">
+              <div class="text-xs text-zinc-600 leading-relaxed max-w-[180px]">
+                {{ order.shippingAddress }}
+              </div>
+            </td>
+            <td class="px-6 py-8">
+              <ul class="text-xs space-y-1">
+                <li *ngFor="let item of order.items" class="text-zinc-600">
+                  <span class="font-bold text-black">{{ item.quantity }}x</span> {{ item.name }}
+                </li>
+              </ul>
+            </td>
+            <td class="px-6 py-8">
+              <div class="text-sm font-bold text-[#D87D4A]">{{ order.total | number }}DT</div>
+            </td>
+            <td class="px-6 py-8">
+              <span [class]="getStatusClass(order.status)" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="px-6 py-8">
+              <div class="flex justify-end gap-2">
+                <button 
+                  *ngIf="order.status === 'pending'"
+                  (click)="updateStatus(order.id, 'confirmed')"
+                  class="bg-green-600 hover:bg-green-700 text-white p-2 rounded transition-colors"
+                  title="Confirm Order">
+                  <i class="icon-check text-xs font-bold">Confirm</i>
+                </button>
+                <button 
+                  *ngIf="order.status === 'pending'"
+                  (click)="updateStatus(order.id, 'declined')"
+                  class="bg-zinc-800 hover:bg-black text-white p-2 rounded transition-colors"
+                  title="Decline Order">
+                  <i class="icon-close text-xs font-bold">Decline</i>
+                </button>
+                <button 
+                  (click)="deleteOrder(order.id)"
+                  class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded transition-colors border border-red-200"
+                  title="Delete Order">
+                  <i class="icon-delete text-xs font-bold">Delete</i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div *ngIf="orders !== null && orders.length === 0" class="p-20 text-center flex flex-col items-center gap-4">
+        <p class="text-zinc-400 font-medium">No orders found in the system.</p>
+      </div>
+      <div *ngIf="orders === null" class="p-20 text-center flex flex-col items-center gap-4">
+        <p class="text-zinc-400 font-medium">Loading orders...</p>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,43 @@
+<app-home-page></app-home-page>
+<div class="cart-overlay fixed inset-0 bg-black/50 z-50 flex justify-end" (click)="closeCart()">
+  <div class="cart-content bg-white w-full max-w-[377px] h-fit mt-24 mr-6 lg:mr-24 rounded-lg p-8" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-lg font-bold uppercase tracking-wider">Cart ({{ cartItems.length }})</h2>
+      <button (click)="removeAll()" class="text-zinc-500 underline text-sm hover:text-[#D87D4A] transition-colors">Remove all</button>
+    </div>
+
+    <div class="flex flex-col gap-6 mb-8 max-h-[400px] overflow-y-auto pr-2">
+      <div *ngFor="let item of cartItems" class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img [src]="item.image" class="w-16 h-16 rounded-lg bg-zinc-100" [alt]="item.name">
+          <div>
+            <p class="font-bold uppercase text-sm truncate max-w-[120px]">{{ item.shortName }}</p>
+            <p class="text-sm font-bold text-zinc-500">{{ item.price | number }}DT</p>
+          </div>
+        </div>
+        
+        <div class="flex bg-zinc-100 items-center h-8">
+          <button (click)="changeQty(item, -1)" class="px-3 text-zinc-400 hover:text-[#D87D4A] transition-colors">-</button>
+          <span class="w-6 text-center font-bold text-sm">{{ item.quantity }}</span>
+          <button (click)="changeQty(item, 1)" class="px-3 text-zinc-400 hover:text-[#D87D4A] transition-colors">+</button>
+        </div>
+      </div>
+      
+      <div *ngIf="cartItems.length === 0" class="py-10 text-center text-zinc-500">
+        Your cart is empty
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center uppercase mb-6">
+      <span class="text-zinc-500 font-medium">Total</span>
+      <span class="font-bold text-lg">{{ calculateTotal() | number }}DT</span>
+    </div>
+
+    <button 
+      (click)="goToCheckout()" 
+      [disabled]="cartItems.length === 0"
+      class="w-full bg-[#D87D4A] hover:bg-[#fbaf85] disabled:bg-zinc-300 disabled:cursor-not-allowed text-white py-4 uppercase font-bold tracking-widest transition-colors">
+      Checkout
+    </button>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<app-top-nav></app-top-nav>
+
+<div class="checkout-container bg-zinc-100 min-h-screen py-20 px-6">
+  <div class="max-w-[1110px] mx-auto">
+    <button class="text-zinc-500 mb-12 hover:text-[#D87D4A]" (click)="goBack()">Go Back</button>
+
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="flex flex-col lg:flex-row gap-8">
+      <!-- Main Checkout Form -->
+      <div class="bg-white rounded-lg p-12 flex-grow">
+        <h1 class="text-3xl font-bold uppercase tracking-wider mb-10">Checkout</h1>
+        
+        <div class="space-y-12">
+          <!-- Billing Details -->
+          <section>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-[#D87D4A] mb-4">Billing Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label class="text-xs font-bold">Full Name</label>
+                <input formControlName="fullName" placeholder="your name" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-xs font-bold">Phone</label>
+                <input formControlName="phone" type="tel" placeholder="+216 xx xxx xxx" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+              </div>
+            </div>
+          </section>
+
+          <!-- Shipping Info -->
+          <section>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-[#D87D4A] mb-4">Shipping Info</h2>
+            <div class="grid grid-cols-1 gap-6">
+              <div class="flex flex-col gap-2">
+                <label class="text-xs font-bold">Address</label>
+                <input formControlName="address" placeholder="your address" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                  <label class="text-xs font-bold">ZIP Code</label>
+                  <input formControlName="zip" placeholder="ex: 12345" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="text-xs font-bold">City</label>
+                  <input formControlName="city" placeholder="your city" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+                </div>
+                <div class="flex flex-col gap-2 md:col-span-2">
+                  <label class="text-xs font-bold">Country</label>
+                  <input formControlName="country" placeholder="your country" class="border border-zinc-300 rounded-lg p-4 focus:border-[#D87D4A] outline-none">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-[#D87D4A] mb-4">Payment</h2>
+            <div class="space-y-4">
+              <label class="flex items-center gap-3">
+                <input type="radio" formControlName="paymentMethod" value="BANK_TRANSFER" class="accent-[#D87D4A]" />
+                <span>Bank Transfer</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input type="radio" formControlName="paymentMethod" value="CASH_ON_DELIVERY" class="accent-[#D87D4A]" />
+                <span>Cash on Delivery</span>
+              </label>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="bg-white rounded-lg p-8 w-full lg:w-[350px] h-fit">
+        <h2 class="text-lg font-bold uppercase tracking-wider mb-8">Summary</h2>
+        <div class="flex flex-col gap-6 mb-8">
+          <div *ngFor="let item of cartItems" class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <img [src]="item.image" class="w-16 h-16 rounded-lg bg-zinc-100">
+              <div>
+                <p class="font-bold uppercase text-sm">{{ item.shortName }}</p>
+                <p class="text-sm font-bold text-zinc-500">{{ item.price | number }}DT</p>
+              </div>
+            </div>
+            <p class="text-zinc-500 font-bold text-sm">x{{ item.quantity }}</p>
+          </div>
+        </div>
+
+        <div class="space-y-2 mb-8">
+          <div class="flex justify-between uppercase">
+            <span class="text-zinc-500 font-medium">Total</span>
+            <span class="font-bold text-lg">{{ total | number }}DT</span>
+          </div>
+          <div class="flex justify-between uppercase">
+            <span class="text-zinc-500 font-medium">Shipping</span>
+            <span class="font-bold text-lg">{{ shipping | number }}DT</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-[#D87D4A] hover:bg-[#fbaf85] text-white py-4 uppercase font-bold tracking-widest transition-colors">
+          Continue & Pay
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

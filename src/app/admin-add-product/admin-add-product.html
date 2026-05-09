@@ -1,0 +1,93 @@
+<app-top-nav></app-top-nav>
+<div class="admin-container flex min-h-screen bg-zinc-50">
+  <!-- Side Navigation -->
+  <aside class="w-64 bg-zinc-900 text-white flex flex-col">
+    <div class="p-8">
+      <span class="text-xl font-bold tracking-widest uppercase">AzizStore</span>
+      <p class="text-xs text-zinc-500 mt-1">Product Manager</p>
+    </div>
+    <nav class="flex-grow mt-4">
+      <a routerLink="/admin/dashboard" class="flex items-center gap-4 px-8 py-4 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
+        <i class="icon-dashboard"></i> DASHBOARD
+      </a>
+      <a routerLink="/admin/products" class="flex items-center gap-4 px-8 py-4 bg-[#D87D4A] text-white">
+        <i class="icon-products"></i> PRODUCTS
+      </a>
+      <!-- Add other nav items here -->
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-12 overflow-y-auto">
+    <div class="max-w-4xl mx-auto">
+      <button (click)="goBack()" class="text-zinc-400 hover:text-[#D87D4A] mb-8 flex items-center gap-2">
+        ← Go Back
+      </button>
+      
+      <h1 class="text-4xl font-bold uppercase mb-12">Add Product</h1>
+
+      <form [formGroup]="productForm" (ngSubmit)="onAddProduct()" class="bg-white rounded-lg shadow-sm border border-zinc-200 p-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <!-- Form Left Side: Details -->
+          <div class="space-y-8">
+            <h2 class="text-xs font-bold text-[#D87D4A] uppercase tracking-widest">Product Details</h2>
+            
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold uppercase">Product ID</label>
+              <input formControlName="id" type="text" placeholder="AUTO-GENERATED" class="border border-zinc-300 rounded p-4 bg-zinc-50 outline-none focus:border-[#D87D4A]">
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold uppercase">Product Name</label>
+              <input formControlName="name" type="text" placeholder="XX99 Mark II Headphones" class="border border-zinc-300 rounded p-4 outline-none focus:border-[#D87D4A]">
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold uppercase">Price (DT)</label>
+              <input formControlName="price" type="number" placeholder="2999" class="border border-zinc-300 rounded p-4 outline-none focus:border-[#D87D4A]">
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold uppercase">Description</label>
+              <textarea formControlName="description" rows="4" placeholder="Brief product overview..." class="border border-zinc-300 rounded p-4 outline-none focus:border-[#D87D4A] resize-none"></textarea>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold uppercase">Features</label>
+              <textarea formControlName="features" rows="6" placeholder="Detailed technical features..." class="border border-zinc-300 rounded p-4 outline-none focus:border-[#D87D4A] resize-none"></textarea>
+            </div>
+          </div>
+
+          <!-- Form Right Side: Media -->
+          <div class="space-y-8">
+            <h2 class="text-xs font-bold text-[#D87D4A] uppercase tracking-widest">Media & Gallery</h2>
+            
+            <div class="border-2 border-dashed border-zinc-200 rounded-lg p-12 text-center flex flex-col items-center justify-center gap-4 bg-zinc-50">
+              <div class="w-16 h-16 bg-zinc-200 rounded-lg flex items-center justify-center text-zinc-400">
+                <i class="icon-image text-2xl"></i>
+              </div>
+              <p class="text-sm text-zinc-500 max-w-[200px]">Drag and drop high-res product image here, or click to browse.</p>
+              
+              <input type="file" #fileInput (change)="onFileSelected($event)" class="hidden" accept="image/*">
+              <button type="button" (click)="fileInput.click()" class="border border-black px-6 py-3 uppercase font-bold text-xs tracking-widest hover:bg-black hover:text-white transition-colors">
+                Select Image
+              </button>
+
+              <div *ngIf="imagePreview" class="mt-4">
+                <p class="text-xs font-bold text-green-600 mb-2">Image Selected:</p>
+                <img [src]="imagePreview" class="w-32 h-32 object-cover rounded border border-zinc-200">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-16 pt-8 border-t border-zinc-100 flex justify-end gap-6">
+          <button type="button" class="text-xs font-bold uppercase tracking-widest hover:text-[#D87D4A]" (click)="goBack()">Cancel</button>
+          <button type="submit" [disabled]="!productForm.valid" class="bg-[#D87D4A] hover:bg-[#fbaf85] disabled:bg-zinc-300 text-white px-10 py-4 uppercase font-bold text-xs tracking-widest transition-colors">
+            Add Product
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

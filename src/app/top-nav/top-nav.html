@@ -1,0 +1,127 @@
+<nav class="top-nav" role="navigation">
+  <div class="nav-container">
+    <div class="nav-left">
+      <button class="hamburger" aria-label="Toggle menu" (click)="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="logo" routerLink="/">
+        <span class="logo-icon">🛍️</span>
+        <span class="logo-text">AzizStore</span>
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a routerLink="/home" class="nav-link">HOME</a></li>
+      <li><a routerLink="/headphones" class="nav-link">SPECIAL OFFER</a></li>
+      <li><a routerLink="/speakers" class="nav-link">ABOUT US</a></li>
+      <li><a routerLink="/earphones" class="nav-link">CONTACT US</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/admin/add-product" class="nav-link admin-link">ADMIN</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="search-container">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search products..." 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="performSearch()"
+          aria-label="Search products">
+        <button class="search-btn" (click)="performSearch()" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <label class="switch">
+        <input id="input" type="checkbox" [checked]="isDark" (change)="toggleTheme()" />
+        <div class="slider round">
+          <div class="sun-moon">
+            <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+
+            <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+            <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50"></circle>
+            </svg>
+          </div>
+          <div class="stars">
+            <svg id="star-1" class="star" viewBox="0 0 20 20">
+              <path
+                d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+              ></path>
+            </svg>
+            <svg id="star-2" class="star" viewBox="0 0 20 20">
+              <path
+                d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+              ></path>
+            </svg>
+            <svg id="star-3" class="star" viewBox="0 0 20 20">
+              <path
+                d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+              ></path>
+            </svg>
+            <svg id="star-4" class="star" viewBox="0 0 20 20">
+              <path
+                d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </label>
+
+      <button [attr.data-quantity]="cartCount" class="btn-cart" (click)="goToCart()" aria-label="Cart">
+        <svg class="icon-cart" viewBox="0 0 24.38 30.52" height="30.52" width="24.38" xmlns="http://www.w3.org/2000/svg">
+          <title>icon-cart</title>
+          <path transform="translate(-3.62 -0.85)" d="M28,27.3,26.24,7.51a.75.75,0,0,0-.76-.69h-3.7a6,6,0,0,0-12,0H6.13a.76.76,0,0,0-.76.69L3.62,27.3v.07a4.29,4.29,0,0,0,4.52,4H23.48a4.29,4.29,0,0,0,4.52-4ZM15.81,2.37a4.47,4.47,0,0,1,4.46,4.45H11.35a4.47,4.47,0,0,1,4.46-4.45Zm7.67,27.48H8.13a2.79,2.79,0,0,1-3-2.45L6.83,8.34h3V11a.76.76,0,0,0,1.52,0V8.34h8.92V11a.76.76,0,0,0,1.52,0V8.34h3L26.48,27.4a2.79,2.79,0,0,1-3,2.44Zm0,0"></path>
+        </svg>
+        <span class="quantity"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" *ngIf="menuOpen" (click)="closeMenu()">
+    <ul>
+      <li><a routerLink="/home" (click)="closeMenu()" class="mobile-link">HOME</a></li>
+      <li><a routerLink="/headphones" (click)="closeMenu()" class="mobile-link">SPECIAL OFFER</a></li>
+      <li><a routerLink="/speakers" (click)="closeMenu()" class="mobile-link">ABOUT US</a></li>
+      <li><a routerLink="/earphones" (click)="closeMenu()" class="mobile-link">CONTACT US</a></li>
+      <li *ngIf="isAdmin"><a routerLink="/admin/add-product" (click)="closeMenu()" class="mobile-link admin-link">ADMIN SPACE</a></li>
+    </ul>
+  </div>
+</nav>

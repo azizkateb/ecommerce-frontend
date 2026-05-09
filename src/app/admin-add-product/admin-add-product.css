@@ -1,0 +1,15 @@
+input::placeholder, textarea::placeholder {
+  color: #999;
+  font-weight: 500;
+}
+
+main::-webkit-scrollbar {
+  width: 6px;
+}
+main::-webkit-scrollbar-track {
+  background: transparent;
+}
+main::-webkit-scrollbar-thumb {
+  background: #D87D4A;
+  border-radius: 10px;
+}

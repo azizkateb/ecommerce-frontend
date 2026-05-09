@@ -1,0 +1,329 @@
+/* Global design system and resets */
+
+@import 'tailwindcss';
+
+:root{
+	--accent: #D87D4A;
+	--accent-600: #c9693a;
+	--bg: #fbfbfb;
+	--surface: #ffffff;
+	--muted: #6b7280;
+	--text: #0b1220;
+	--radius: 12px;
+	--max-width: 1110px;
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; }
+body{
+	font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+	background: var(--bg);
+	color:var(--text);
+	line-height:1.45;
+	transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* Page container used across app templates */
+.container{ max-width:var(--max-width); margin:0 auto; padding:0 1rem; }
+
+/* Cards */
+.card{ background:var(--surface); border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,0.06); padding:1rem; }
+
+/* Buttons */
+.btn{ display:inline-flex; align-items:center; gap:.5rem; border:0; cursor:pointer; padding:.75rem 1rem; border-radius:10px; font-weight:700; }
+.btn-primary{ background:var(--accent); color:#fff; }
+.btn-ghost{ background:transparent; border:1px solid rgba(11,17,32,0.06); color:var(--text); }
+
+/* Form controls */
+input[type='text'], input[type='email'], input[type='password'], textarea, select{
+	padding:.75rem 1rem; border-radius:8px; border:1px solid rgba(11,17,32,0.06); background:var(--surface); width:100%; color:var(--text);
+}
+
+input[type='text']:focus, input[type='email']:focus, input[type='password']:focus, textarea:focus, select:focus{
+	border-color: var(--accent);
+	box-shadow: 0 10px 30px rgba(216,125,74,0.08);
+	outline: none;
+}
+
+/* handy utility classes */
+.accent{ color:var(--accent); }
+.input-field{ padding:.75rem 1rem; border-radius:8px; border:1px solid rgba(11,17,32,0.06); background:var(--surface); width:100%; color:var(--text); }
+
+/* Utility */
+.muted{ color:var(--muted); }
+
+/* Improve anchor styles */
+a{ color:inherit; transition: color .18s ease, opacity .18s ease; text-decoration:none; will-change: color, opacity; }
+a:hover, a:focus{ color:var(--accent); text-decoration:none; opacity:0.95; }
+
+/* Small helpers for consistent spacing */
+.spacer-vertical{ height:1.5rem; }
+
+@media (max-width:720px){
+	:root{ --max-width: 680px; }
+	.container{ padding:0 0.75rem; }
+}
+
+/* Dark theme overrides */
+.dark-theme{
+	--bg: #1a1a1a; /* mid-light black background */
+	--surface: #2a2a2a; /* slightly lighter surface */
+	--text: #f5f5f5; /* bright white text for maximum visibility */
+	--muted: #b8b8b8; /* light gray for secondary text */
+	--accent: #f59e0b; /* warm amber accent */
+	--accent-600: #d97706; /* darker amber */
+}
+
+/* Dark theme component overrides */
+.dark-theme .hero-section {
+  background: linear-gradient(180deg, rgba(26,26,26,0.8), rgba(26,26,26,0.4));
+}
+
+.dark-theme .hero-section .hero-overlay {
+  background: linear-gradient(90deg, rgba(26,26,26,0.9) 0%, rgba(26,26,26,0.7) 28%, rgba(26,26,26,0.5) 55%, rgba(26,26,26,0.0) 100%);
+}
+
+.dark-theme .hero-arrow-btn {
+  background: rgba(42,42,42,0.9);
+  color: var(--text);
+}
+
+.dark-theme .hero-arrow-btn:hover {
+  background: rgba(42,42,42,1);
+}
+
+.dark-theme .hero-content h1 {
+  color: var(--text);
+  text-shadow: 0 8px 30px rgba(0,0,0,0.8);
+}
+
+.dark-theme .hero-content p {
+  color: var(--muted);
+}
+
+.dark-theme .hero-content span {
+  color: var(--muted);
+}
+
+.dark-theme .hero-dots .hero-dot {
+  background: rgba(245,245,245,0.5);
+}
+
+.dark-theme .hero-dots .hero-dot.active {
+  background: var(--accent);
+}
+
+/* Dashboard dark theme overrides */
+.dark-theme .status-pending {
+  background-color: rgba(254, 243, 199, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(254, 243, 199, 0.2);
+}
+
+.dark-theme .status-confirmed,
+.dark-theme .status-processing {
+  background-color: rgba(209, 250, 229, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(209, 250, 229, 0.2);
+}
+
+/* Navigation dark theme overrides */
+.dark-theme .top-nav {
+  background: rgba(42, 42, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245, 245, 245, 0.1);
+}
+
+.dark-theme .hamburger span {
+  background: var(--text);
+}
+
+.dark-theme .mobile-menu {
+  background: var(--surface);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .mobile-menu a:hover {
+  background: rgba(245, 245, 245, 0.05);
+}
+
+/* Enhanced dark theme styling */
+.dark-theme {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.dark-theme .card {
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(245, 245, 245, 0.1);
+}
+
+.dark-theme .btn-ghost {
+  border-color: rgba(245, 245, 245, 0.2);
+  color: var(--text);
+}
+
+.dark-theme .btn-ghost:hover {
+  background: rgba(245, 245, 245, 0.05);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.dark-theme input[type='text'],
+.dark-theme input[type='email'],
+.dark-theme input[type='password'],
+.dark-theme textarea,
+.dark-theme select {
+  background: rgba(42, 42, 42, 0.8);
+  border-color: rgba(245, 245, 245, 0.2);
+  color: var(--text);
+}
+
+.dark-theme input[type='text']:focus,
+.dark-theme input[type='email']:focus,
+.dark-theme input[type='password']:focus,
+.dark-theme textarea:focus,
+.dark-theme select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.1);
+}
+
+/* Admin components dark theme */
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: var(--muted);
+}
+
+.dark-theme main::-webkit-scrollbar-thumb {
+  background: var(--accent);
+}
+
+/* Dashboard dark theme overrides */
+.dark-theme .admin-layout {
+  background: var(--bg);
+}
+
+.dark-theme .bg-zinc-50 {
+  background: var(--surface);
+}
+
+.dark-theme .text-zinc-500 {
+  color: var(--muted);
+}
+
+.dark-theme .text-zinc-400 {
+  color: var(--muted);
+}
+
+.dark-theme .text-zinc-600 {
+  color: var(--muted);
+}
+
+.dark-theme .text-zinc-100 {
+  color: var(--text);
+}
+
+.dark-theme .bg-zinc-100 {
+  background: #3a3a3a;
+}
+
+.dark-theme .text-black {
+  color: var(--text);
+}
+
+.dark-theme .bg-white {
+  background: var(--surface);
+}
+
+.dark-theme .border-zinc-200 {
+  border-color: #404040;
+}
+
+.dark-theme .divide-zinc-100 {
+  border-color: #404040;
+}
+
+.dark-theme .hover\:bg-zinc-50:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .bg-zinc-800 {
+  background: #404040;
+}
+
+.dark-theme .hover\:bg-black:hover {
+  background: #2a2a2a;
+}
+
+.dark-theme .bg-red-50 {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.dark-theme .hover\:bg-red-100:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.dark-theme .text-red-600 {
+  color: #f87171;
+}
+
+.dark-theme .border-red-200 {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Product details dark theme overrides */
+.dark-theme .text-zinc-400 {
+  color: var(--muted);
+}
+
+.dark-theme .hover\:text-\[#D87D4A\]:hover {
+  color: var(--accent);
+}
+
+.dark-theme .bg-zinc-100 {
+  background: #3a3a3a;
+}
+
+.dark-theme .hover\:bg-\[#fbaf85\]:hover {
+  background: #e0854d;
+}
+
+/* All products dark theme overrides */
+.dark-theme .category-header {
+  background: var(--surface);
+}
+
+.dark-theme .category-header h1 {
+  color: var(--text);
+}
+
+.dark-theme .bg-zinc-100 {
+  background: #3a3a3a;
+}
+
+/* Cart dark theme overrides */
+.dark-theme .cart-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dark-theme .cart-content {
+  background: var(--surface);
+}
+
+.dark-theme .text-zinc-400 {
+  color: var(--muted);
+}
+
+.dark-theme .disabled\:bg-zinc-300:disabled {
+  background: #555555;
+}
+
+/* Checkout dark theme overrides */
+.dark-theme .checkout-container {
+  background: var(--bg);
+}
+
+.dark-theme .border-zinc-300 {
+  border-color: #555555;
+}
+

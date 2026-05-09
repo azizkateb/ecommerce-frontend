@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.status-pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.status-confirmed,
+.status-processing {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+.status-declined,
+.status-cancelled {
+  background-color: #FEE2E2;
+  color: #991B1B;
+}
+
+button i {
+  font-style: normal;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
