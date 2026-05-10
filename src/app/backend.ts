@@ -1,71 +1,80 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { tap } from 'rxjs';
+import { tap, from, map } from 'rxjs';
+import api from '../api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Backend {
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  private url = 'http://localhost:8080/api/'
+  private getToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
+  }
+
+  private getHeaders() {
+    const token = this.getToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
 
   register(data:{email:string, password:string,name:string}) {
-    return this.http.post(this.url + 'users/register', data);
-}
+    return from(api.post('users/register', data)).pipe(map(res => res.data));
+  }
 
   login(data:{email:string, password:string}) {
-    return this.http.post<any>(this.url + 'users/login', data).pipe(
-      tap((res) => {
+    return from(api.post('users/login', data)).pipe(
+      tap((res: any) => {
         if (isPlatformBrowser(this.platformId)) {
-          localStorage.setItem('token', res.token);
+          localStorage.setItem('token', res.data.token);
         }
-      })
+      }),
+      map(res => res.data)
     );
   }
   
   /** Create a new product via backend API */
   createProduct(data: {name:string, price:number, description:string, imageUrl?:string, image_url?:string}) {
-    // AuthInterceptor handles the token.
-    return this.http.post(this.url + 'products', data);
+    return from(api.post('products', data, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   getProducts() {
-    // AuthInterceptor handles the token.
-    return this.http.get(this.url + 'products');
+    return from(api.get('products', { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   checkout(data: any) {
-    return this.http.post(this.url + 'orders/checkout', data);
+    return from(api.post('orders/checkout', data, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   getMyOrders() {
-    return this.http.get<any[]>(this.url + 'orders');
+    return from(api.get('orders', { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   getAllOrders() {
-    return this.http.get<any[]>(this.url + 'orders/admin/all');
+    return from(api.get('orders/admin/all', { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   getProfile() {
-    return this.http.get<any>(this.url + 'users/profile');
+    return from(api.get('users/profile', { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   makeAdmin() {
-    return this.http.post<any>(this.url + 'users/make-admin', {});
+    return from(api.post('users/make-admin', {}, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   updateOrderStatus(orderId: string, status: string) {
-    return this.http.patch<any>(this.url + 'orders/admin/' + orderId + '/status', { status });
+    return from(api.patch('orders/admin/' + orderId + '/status', { status }, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   deleteOrder(orderId: string) {
-    return this.http.delete<any>(this.url + 'orders/' + orderId);
+    return from(api.delete('orders/' + orderId, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 
   getProduct(id: string) {
-    return this.http.get(this.url + 'products/' + id);
+    return from(api.get('products/' + id, { headers: this.getHeaders() })).pipe(map(res => res.data));
   }
 }
