@@ -1,11 +1,10 @@
-/// <reference types="vite/client" />
-
 import axios from 'axios';
+import { environment } from './environments/environment';
 
-const apiUrl = import.meta.env['VITE_API_URL'];
+const apiUrl = environment.apiUrl;
 
 if (!apiUrl) {
-  throw new Error('Missing environment variable VITE_API_URL. Set it in .env or .env.production.');
+  throw new Error('Missing API URL in Angular environment configuration. Set apiUrl in src/environments/environment.ts or environment.prod.ts.');
 }
 
 const api = axios.create({

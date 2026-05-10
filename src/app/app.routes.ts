@@ -16,8 +16,9 @@ export const routes: Routes = [
     { path: 'admin/add-product', component: AdminAddProduct },
     { path: 'product/:id', component: ProductDetailComponent },
     { path : 'products', component:AllProduct},
-    {path: 'cart', component: Cart},
+    { path: 'cart', component: Cart},
     { path:'checkout',component:Checkout},
-    { path: 'admin/dashboard',component:Dashboard}
+    { path: 'admin/dashboard',component:Dashboard},
+    { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
